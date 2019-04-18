@@ -1,0 +1,76 @@
+package com.func;
+
+import java.util.function.BiFunction;
+import java.util.function.BinaryOperator;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
+import java.util.function.UnaryOperator;
+
+public class FunctionAsVarApp {
+    
+    static String staticConcat(String x, String y) {
+	return x+y;
+    }
+    
+    String instanceConcat(String x, String y) {
+	return x+y;
+    }
+
+    public static void main(String[] args) {
+	BiFunction<String,String,String> concatFunc = (a,b) -> {return a+b;};
+	System.out.println(concatFunc.apply("hello", "world"));
+	
+	concatFunc = FunctionAsVarApp::staticConcat;
+	System.out.println(concatFunc.apply("hello", "world1111"));
+	
+	concatFunc = new FunctionAsVarApp()::instanceConcat;
+	System.out.println(concatFunc.apply("hello", "world222"));
+	
+	Consumer<Integer> con1 = (i) -> System.out.println(i);
+	con1.accept(23);
+	Consumer<Integer> con = System.out::println;
+	con.accept(22);
+	
+	
+	//Function<Person, Integer> f = p -> p.getAge();
+	Function<Person, Integer> f1 = Person::getAge;
+	System.out.println(f1.apply(new Person()));
+	
+	Function<Object, Integer> f = Object::hashCode;
+	
+	
+	BinaryOperator<Integer> sum = (i1,i2) -> Integer.sum(i1, i2);
+	//BinaryOperator<Integer> sum1 = Integer::hashCode;	//gives CE since it doesnt acpt any params
+	//UnaryOperator<Integer> value = Integer::hashCode;
+	//Supplier<Integer> hash = Integer::hashCode;	//gives CE since get() of Supplier doesnt acpt any params
+	Function<String, Integer> hash = String::hashCode;
+	
+	UnaryOperator<Integer> value = Integer::valueOf;//static
+	BinaryOperator<Integer> sum1 = Integer::compareTo;
+	BinaryOperator<Integer> sum2 = (i1,i2) -> i1.compareTo(i2);
+	System.out.println(sum1.apply(2, 5));
+	System.out.println(sum2.apply(2, 5));	//here, sum1 and sum2 are two equalent lambdas wid diff syntaxes
+	
+	value.apply(5);
+	
+	Supplier<String> sup = String::new;
+	//Supplier<Integer> sup1 = Integer::new; 	//CE , since der s no 0-arg constructr
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+    }
+
+}
