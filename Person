@@ -1,0 +1,17 @@
+package com.func;
+
+public class Person {
+    
+    /*public Person(int i) {
+	
+    }*/
+    
+    public int getAge() {
+	return 22;
+    }
+    
+   /* public int getAge(Person p) {
+	return 23;
+    }
+*/
+}
